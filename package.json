@@ -1,0 +1,18 @@
+{
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "start": "node ./src/main.js",
+    "dev": "nodemon ./src/main.js --watch ./src"
+  },
+  "dependencies": {
+    "@fastify/cors": "^8.1.1",
+    "@fastify/jwt": "^6.3.2",
+    "bcrypt": "^5.1.0",
+    "fastify": "^4.9.2",
+    "mongoose": "^6.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
