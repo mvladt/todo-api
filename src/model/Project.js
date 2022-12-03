@@ -1,19 +1,15 @@
 import mongoose, { Schema } from "mongoose";
 
 export default mongoose.model(
-  "Todo",
+  "Project",
   mongoose.Schema({
-    text: {
+    name: {
       type: String,
-      require: true,
+      required: true,
     },
-    checked: {
-      type: Boolean,
-      default: false,
-    },
-    project_id: {
+    owner_id: {
       type: Schema.Types.ObjectId,
-      ref: "Project",
+      ref: "User",
     },
   })
 );

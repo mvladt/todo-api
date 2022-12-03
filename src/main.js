@@ -5,6 +5,7 @@ import fastifyJwt from "@fastify/jwt";
 
 import todoRoutes from "./routes/todo.js";
 import authRoutes from "./routes/auth.js";
+import projectRoutes from "./routes/project.js";
 
 const app = fastify({ logger: true });
 
@@ -31,6 +32,7 @@ app.decorate("authenticate", async (request, reply) => {
 
 app.register(todoRoutes);
 app.register(authRoutes);
+app.register(projectRoutes);
 
 try {
   app.listen({ port: "8000" });

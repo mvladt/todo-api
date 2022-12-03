@@ -1,30 +1,30 @@
 import Todo from "../model/Todo.js";
+import fastifyWrapper from "../utils/fastifyWrapper.js";
 
 const baseUrl = "/api/todo";
 
 export default async function (fastify, options) {
-  fastify.get(
-    baseUrl,
-    { onRequest: [fastify.authenticate] },
-    async (request, reply) => {
-      return Todo.find();
-    }
-  );
+  fastifyWrapper.baseUrl = baseUrl;
+  fastifyWrapper.fastify = fastify;
 
-  fastify.post(
-    baseUrl,
-    { onRequest: [fastify.authenticate] },
-    async (request, reply) => {
-      return Todo.create(request.body);
-    }
-  );
+  fastifyWrapper.get("/:projectId", async (request, reply) => {
+    const todos = Todo.find({ project_id: request.params.projectId });
+    return todos;
+  });
+
+  fastifyWrapper.post("/:projectId", async (request, reply) => {
+    const todo = Todo.create({
+      ...request.body,
+      project_id: request.params.projectId,
+    });
+    return todo;
+  });
 
   fastify.delete(
     `${baseUrl}/:todoId`,
     { onRequest: [fastify.authenticate] },
     async (request, reply) => {
-      const { todoId } = request.params;
-      return Todo.deleteOne({ _id: todoId });
+      return Todo.deleteOne({ _id: request.params.todoId });
     }
   );
 
