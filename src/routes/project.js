@@ -1,32 +1,25 @@
 import Project from "../model/Project.js";
-
-const baseUrl = "/api/project";
+import createFastifyWrapper from "../utils/fastifyWrapper.js";
 
 export default async function (fastify, options) {
-  fastify.post(
-    baseUrl,
-    { onRequest: [fastify.authenticate] },
-    async (request, reply) => {
-      return projectService.add({ ...request.body, owner_id: request.user._id });
-    }
-  );
+  const baseUrl = "/api/project";
+  const fastifyWrapper = createFastifyWrapper(baseUrl, fastify);
 
-  fastify.get(
-    baseUrl,
-    { onRequest: [fastify.authenticate] },
-    async (request, reply) => {
-      return projectService.getAll(request.user._id);
-    }
-  );
+  fastifyWrapper.post("/", async (request, reply) => {
+    const newProject = { ...request.body, owner_id: request.user._id };
+    return projectService.add(newProject);
+  });
 
-  fastify.delete(
-    `${baseUrl}/:projectId`,
-    { onRequest: [fastify.authenticate] },
-    async (request, reply) => {
-      return projectService.delete(request.params.projectId);
-    }
-  );
+  fastifyWrapper.get("/", async (request, reply) => {
+    return projectService.getAll(request.user._id);
+  });
+
+  fastifyWrapper.delete("/:projectId", async (request, reply) => {
+    return projectService.delete(request.params.projectId);
+  });
 }
+
+// - - -
 
 const projectService = {
   add(project) {

@@ -1,13 +1,6 @@
-const fastifyWrapper = {
-  baseUrl: undefined,
-  fastify: undefined,
-
+const fastifyWrapperMethods = {
   get(url, callback) {
-    this.fastify.get(
-      this.baseUrl + url,
-      { onRequest: [this.fastify.authenticate] },
-      callback
-    );
+    this.fastify.get(this.baseUrl + url, { onRequest: [this.fastify.authenticate] }, callback);
   },
 
   post(url, callback) {
@@ -19,11 +12,7 @@ const fastifyWrapper = {
   },
 
   put(url, callback) {
-    this.fastify.put(
-      this.baseUrl + url,
-      { onRequest: [this.fastify.authenticate] },
-      callback
-    );
+    this.fastify.put(this.baseUrl + url, { onRequest: [this.fastify.authenticate] }, callback);
   },
 
   delete(url, callback) {
@@ -35,4 +24,10 @@ const fastifyWrapper = {
   },
 };
 
-export default fastifyWrapper;
+export default function createFastifyWrapper(baseUrl, fastify) {
+  return {
+    baseUrl,
+    fastify,
+    ...fastifyWrapperMethods,
+  };
+}

@@ -10,9 +10,11 @@
     "@fastify/jwt": "^6.3.2",
     "bcrypt": "^5.1.0",
     "fastify": "^4.9.2",
-    "mongoose": "^6.7.0"
+    "mongoose": "^6.7.0",
+    "web-push": "^3.5.0"
   },
   "devDependencies": {
+    "dotenv": "^16.0.3",
     "nodemon": "^2.0.20"
   }
 }
