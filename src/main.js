@@ -10,8 +10,8 @@ import projectRoutes from "./routes/project.js";
 import pushRoutes from "./routes/push.js";
 import resolveEnvFile from "./utils/resolveEnvFile.js";
 
+// TODO: env заинжектить в fastify
 dotenv.config({ path: resolveEnvFile() });
-
 
 const app = fastify({ logger: true });
 
